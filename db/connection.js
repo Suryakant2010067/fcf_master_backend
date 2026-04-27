@@ -9,7 +9,8 @@ let poolConfig = {};
 if (process.env.DATABASE_URL) {
   poolConfig = {
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
+    connectionTimeoutMillis: 5000 // 5 seconds timeout
   };
   console.log('🔗 DB Config: Using DATABASE_URL');
 } else {
@@ -20,7 +21,8 @@ if (process.env.DATABASE_URL) {
     user: process.env.DB_USER || 'postgres',
     password: process.env.DB_PASSWORD || process.env.DB_PASS,
     database: process.env.DB_NAME,
-    ssl: isRender ? { rejectUnauthorized: false } : false // Use SSL if on Render
+    ssl: isRender ? { rejectUnauthorized: false } : false, // Use SSL if on Render
+    connectionTimeoutMillis: 5000 // 5 seconds timeout
   };
   console.log(`🔗 DB Config: Using DB_HOST (${process.env.DB_HOST})`);
 }
