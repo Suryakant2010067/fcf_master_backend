@@ -9,9 +9,10 @@ const PORT = process.env.PORT || 5001;
 
 // Detailed CORS Setup to prevent Vercel blocking
 app.use(cors({
-  origin: '*', // Allow all origins including Vercel
+  origin: ['https://fcf-master-app-1wgn.vercel.app', 'http://localhost:5173', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  credentials: true
 }));
 
 app.use(express.json());
