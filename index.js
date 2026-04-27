@@ -26,23 +26,7 @@ app.get('/api/health', (req, res) => {
 // Initialize DB and start server
 async function startServer() {
   try {
-    // Create DB if not exists
-    const { Pool } = require('pg');
-    const adminPool = new Pool({
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: 'postgres'
-    });
-    const dbCheck = await adminPool.query(
-      `SELECT 1 FROM pg_database WHERE datname = 'fcf_master'`
-    );
-    if (dbCheck.rows.length === 0) {
-      await adminPool.query('CREATE DATABASE fcf_master');
-      console.log('✅ Database fcf_master created');
-    }
-    await adminPool.end();
+
 
     // Seed data
     await seedDatabase();
