@@ -7,7 +7,13 @@ const seedDatabase = require('./db/seed');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-app.use(cors());
+// Detailed CORS Setup to prevent Vercel blocking
+app.use(cors({
+  origin: '*', // Allow all origins including Vercel
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}));
+
 app.use(express.json());
 
 // Routes
