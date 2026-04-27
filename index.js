@@ -28,12 +28,12 @@ async function startServer() {
   try {
 
 
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 FCF Master API running on port ${PORT}`);
+    });
+
     // Seed data
     await seedDatabase();
-
-    app.listen(PORT, () => {
-      console.log(`🚀 FCF Master API running on http://localhost:${PORT}`);
-    });
   } catch (err) {
     console.error('❌ Server startup error:', err);
     process.exit(1);
