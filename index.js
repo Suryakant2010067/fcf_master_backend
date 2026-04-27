@@ -23,6 +23,31 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'FCF Master API running', port: PORT });
 });
 
+// Root path for debugging
+app.get('/', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.send(`
+      <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+        <h1 style="color: #22c55e;">✅ API is LIVE!</h1>
+        <p>The backend is running perfectly on port ${PORT}.</p>
+        <p style="color: #22c55e; font-weight: bold;">🟢 Database Connection: SUCCESSFUL</p>
+        <p>Your frontend can now talk to this API.</p>
+      </div>
+    `);
+  } catch (err) {
+    res.send(`
+      <div style="font-family: sans-serif; text-align: center; padding: 50px;">
+        <h1 style="color: #22c55e;">✅ API is LIVE!</h1>
+        <p>The backend is running perfectly on port ${PORT}.</p>
+        <p style="color: red; font-weight: bold;">🔴 Database Connection: FAILED</p>
+        <p style="background: #f1f1f1; padding: 10px; border-radius: 5px; color: red;">Error: ${err.message}</p>
+        <p>Please check your DB_HOST, DB_USER, DB_PASS, and ensure Render's IP (0.0.0.0/0) is allowed in Google Cloud SQL.</p>
+      </div>
+    `);
+  }
+});
+
 // Initialize DB and start server
 async function startServer() {
   try {
