@@ -204,7 +204,7 @@ async function seedDatabase() {
     console.log('✅ Database seeded successfully');
   } catch (err) {
     await client.query('ROLLBACK');
-    console.error('❌ Seed error:', err.message);
+    console.error('❌ Seed error:', err);
     throw err;
   } finally {
     client.release();

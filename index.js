@@ -35,7 +35,7 @@ async function startServer() {
       console.log(`🚀 FCF Master API running on http://localhost:${PORT}`);
     });
   } catch (err) {
-    console.error('❌ Server startup error:', err.message);
+    console.error('❌ Server startup error:', err);
     process.exit(1);
   }
 }

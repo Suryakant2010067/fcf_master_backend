@@ -1,8 +1,17 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+const isRender = process.env.RENDER === 'true';
+const hasDbUrl = !!process.env.DATABASE_URL;
+
+console.log('🔗 DB Connection Config:', hasDbUrl ? 'Using DATABASE_URL' : 'Using Local Config (Host: ' + process.env.DB_HOST + ')');
+
+if (isRender && !hasDbUrl) {
+  console.error('❌ FATAL: Running on Render but DATABASE_URL is not set in Environment Variables!');
+}
+
 const pool = new Pool(
-  process.env.DATABASE_URL
+  hasDbUrl
     ? {
         connectionString: process.env.DATABASE_URL,
         ssl: { rejectUnauthorized: false }
