@@ -1,6 +1,19 @@
 const { Pool } = require('pg');
 const { Connector } = require('@google-cloud/cloud-sql-connector');
+const fs = require('fs');
 require('dotenv').config();
+
+// Handle Render Environment variable containing the raw JSON string
+if (process.env.GCP_SERVICE_ACCOUNT_KEY) {
+  try {
+    const keyPath = '/tmp/gcs-key.json';
+    fs.writeFileSync(keyPath, process.env.GCP_SERVICE_ACCOUNT_KEY);
+    process.env.GOOGLE_APPLICATION_CREDENTIALS = keyPath;
+    console.log('✅ Generated GCP credentials file from GCP_SERVICE_ACCOUNT_KEY');
+  } catch (err) {
+    console.error('❌ Failed to write GCP credentials file:', err);
+  }
+}
 
 let poolInstance = null;
 
