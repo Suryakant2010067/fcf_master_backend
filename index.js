@@ -58,8 +58,6 @@ app.get('/', async (req, res) => {
 // Initialize DB and start server
 async function startServer() {
   try {
-
-
     app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 FCF Master API running on port ${PORT}`);
     });
@@ -67,8 +65,9 @@ async function startServer() {
     // Seed data
     await seedDatabase();
   } catch (err) {
-    console.error('❌ Server startup error:', err);
-    process.exit(1);
+    console.error('❌ Server startup error (Database Seed Failed):', err.message);
+    // DO NOT exit process here, otherwise Render returns 502 Bad Gateway
+    // We want the server to stay alive so it can show the error on the / route!
   }
 }
 
